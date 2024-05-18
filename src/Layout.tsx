@@ -12,6 +12,7 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useLocalStorage('token', '');
+  const [auth, setAuth] = useLocalStorage('auth', '-');
 
   useEffect(() => {
     if (token && token !== '') {
@@ -26,7 +27,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
       <main className='flex'>
         <Sidebar items={items} />
         <section className='bg-gray-50 h-screen p-4 w-[80%]'>
-          <Navbar />
+          <Navbar auth={auth} />
           <div className='overflow-y-auto py-4'>
             {children}
           </div>

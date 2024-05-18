@@ -1,12 +1,23 @@
 import React from 'react'
+import { Button } from '@mui/material';
 
-const Navbar = () => {
+interface NavbarProps {
+  auth: object|any;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ auth }) => {
   return (
     <header className='bg-white py-3 px-4 rounded'>
       <nav className='flex justify-between items-center'>
-        <div />
         <div>
-          User
+          Hai 👋, <span className='font-semibold'>{auth?.name ?? '-'}</span>
+        </div>
+        <div>
+          <Button
+            color='secondary'
+          >
+            LOGOUT
+          </Button>
         </div>
       </nav>
     </header>
