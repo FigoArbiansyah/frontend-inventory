@@ -1,24 +1,8 @@
-import App from '../App.tsx';
-import Category from '../pages/Category.tsx';
-import Dashboard from '../pages/Dashboard.tsx';
-import Login from '../pages/Login.tsx';
+import { ROLE_LEVEL_ID } from '../helpers/constant.ts';
+import administrator from './administrator.ts';
 
-const routes = [
-  {
-    name: 'Login',
-    path: '/',
-    element: Login,
-  },
-  // {
-  //   name: 'Dashboard',
-  //   path: '/dashboard',
-  //   element: Dashboard,
-  // },
-  // {
-  //   name: 'Category',
-  //   path: '/category',
-  //   element: Category,
-  // },
-];
+const routes = {
+  [ROLE_LEVEL_ID.ADMINISTRATOR]: administrator,
+};
 
 export default routes;
