@@ -21,5 +21,6 @@ module.exports = {
     'import/extensions': 0,
     'linebreak-style': 0,
     'import/no-unresolved': 0,
+    '@typescript-eslint/no-explicit-any': 'warn',
   },
 }
