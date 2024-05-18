@@ -1,17 +1,8 @@
-import { AreaChartOutlined, TagsOutlined } from "@ant-design/icons"
-import { sidebarMenus } from "../helpers/interface";
+import { ROLE_LEVEL_ID } from '../helpers/constant.ts';
+import administrator from './administrator.ts';
 
-const items: sidebarMenus[] = [
-  {
-    to: '/dashboard',
-    icon: AreaChartOutlined,
-    title: 'Dashboard',
-  },
-  {
-    to: '/category',
-    icon: TagsOutlined,
-    title: 'Category',
-  },
-];
+const menus = {
+  [ROLE_LEVEL_ID.ADMINISTRATOR]: administrator,
+};
 
-export default items;
+export default menus;

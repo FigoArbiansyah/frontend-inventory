@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
-import items from './menus';
 import Navbar from './components/Navbar';
 import useLocalStorage from './hooks/useLocalStorage';
+import menus from './menus';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -13,6 +13,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
   const [token, setToken] = useLocalStorage('token', '');
   const [auth, setAuth] = useLocalStorage('auth', '-');
+  let authorizedMenus = menus?.[1] // JUST FOR INITIAL
+
+  if (auth?.role_id) {
+    authorizedMenus = menus?.[auth?.role_id];
+  }
 
   useEffect(() => {
     if (token && token !== '') {
@@ -25,7 +30,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <>
       <main className='flex'>
-        <Sidebar items={items} />
+        <Sidebar items={authorizedMenus} />
         <section className='bg-gray-50 h-screen p-4 w-[80%]'>
           <Navbar auth={auth} />
           <div className='overflow-y-auto py-4'>
