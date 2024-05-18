@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import useLocalStorage from './hooks/useLocalStorage';
@@ -11,7 +11,9 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [token, setToken] = useLocalStorage('token', '');
+  const [expiresIn, setExpiresIn] = useLocalStorage('expiresIn', '');
   const [auth, setAuth] = useLocalStorage('auth', '-');
   let authorizedMenus = menus?.[1] // JUST FOR INITIAL
 
@@ -20,12 +22,16 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    if (token && token !== '') {
-      navigate('/dashboard'); // Handle ketika sudah login
-    } else if (!token && (token === '' || token === null)) {
+    if (new Date().getTime() > expiresIn) {
+      // Token telah kedaluwarsa
+      setToken('');
+      setExpiresIn('');
+      setAuth('');
+    }
+    if (!token || (token === '' || token === null)) {
       navigate('/'); // Handle ketika belum login
     }
-  }, [token]);
+  }, [token, location?.pathname]);
 
   return (
     <>

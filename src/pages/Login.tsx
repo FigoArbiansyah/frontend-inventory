@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import FormLogin from '../components/FormLogin';
@@ -9,10 +9,13 @@ import useLocalStorage from '../hooks/useLocalStorage';
 const Login = () => {
   const navigate = useNavigate();
   const [token, setToken] = useLocalStorage('token', null);
+  const [expiresIn, setExpiresIn] = useLocalStorage('expiresIn', 3600);
   const [auth, setAuth] = useLocalStorage('auth', null);
+  const [loading, setLoading] = useState(false);
 
   const _handleSubmit = async (values: any) => {
     try {
+      setLoading(true);
       const url = `${API_ENDPOINTS.dev}/auth/login`;
       const formData = new FormData();
       formData.append('email', values?.email);
@@ -22,24 +25,29 @@ const Login = () => {
       if (request?.status === 200) {
         const response = request?.data;
         setToken(response?.data?.access_token);
-        // console.log('response', response);
+        const expirationTime = (new Date().getTime()) + (response?.data?.expires_in * 10000);
+        setExpiresIn(expirationTime);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   }
 
   const _fetchAuthData = async (token: string) => {
     try {
+      setLoading(true);
       const url = `${API_ENDPOINTS.dev}/auth/me`;
       const request = await axios.get(url, axiosConfig(token));
       if (request?.status === 200) {
         const response = request?.data;
         setAuth({ ...response?.data, token });
-        // console.log('response', response);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -47,12 +55,14 @@ const Login = () => {
     // Handle ketika sudah login
     if (token && token !== '') {
       _fetchAuthData(token);
-      navigate('/dashboard');
+      if (auth && auth !== '') {
+        navigate('/dashboard');
+      }
     }
-  }, [token]);
+  }, [token, auth]);
 
   // Handle ketika sudah login
-  if (token && token !== '') {
+  if (token && token !== '' && auth && auth !== '') {
     return '';
   }
 
@@ -61,6 +71,7 @@ const Login = () => {
       <div className='p-5 bg-white rounded shadow w-[22rem]'>
         <div>
           <FormLogin
+            loading={loading}
             initialValues={{
               email: '',
               password: '',

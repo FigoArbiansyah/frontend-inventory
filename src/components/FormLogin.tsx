@@ -11,6 +11,7 @@ interface SignInFormValues {
 interface FormProps {
   onSave: (values: any) => void;
   initialValues: SignInFormValues;
+  loading: boolean;
 }
 
 const validationSchema = Yup.object().shape({
@@ -23,7 +24,7 @@ const validationSchema = Yup.object().shape({
     .required('Password harus diisi'),
 })
 
-const FormLogin: React.FC<FormProps> = ({ onSave, initialValues }) => {
+const FormLogin: React.FC<FormProps> = ({ onSave, initialValues, loading = false }) => {
   return (
     <Formik
       initialValues={initialValues}
@@ -82,8 +83,9 @@ const FormLogin: React.FC<FormProps> = ({ onSave, initialValues }) => {
           <Button
             variant='contained'
             onClick={() => handleSubmit()}
+            disabled={loading}
           >
-            MASUK
+            {loading ? 'LOADING' : 'MASUK'}
           </Button>
         </div>
       )}
