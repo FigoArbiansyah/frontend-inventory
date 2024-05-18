@@ -1,9 +1,17 @@
 import App from '../App.tsx';
+import Category from '../pages/Category.tsx';
+import Dashboard from '../pages/Dashboard.tsx';
 
 const routes = [
   {
-    path: '/',
-    element: App,
+    name: 'Dashboard',
+    path: '/dashboard',
+    element: Dashboard,
+  },
+  {
+    name: 'Category',
+    path: '/category',
+    element: Category,
   },
 ];
 
