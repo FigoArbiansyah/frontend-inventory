@@ -18,7 +18,6 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "@mui/x-data-grid": "^7.5.0",
-    "antd": "^5.17.2",
     "axios": "^1.6.8",
     "formik": "^2.4.6",
     "moment": "^2.30.1",
