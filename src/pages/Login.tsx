@@ -25,7 +25,7 @@ const Login = () => {
       if (request?.status === 200) {
         const response = request?.data;
         setToken(response?.data?.access_token);
-        const expirationTime = (new Date().getTime()) + (response?.data?.expires_in * 10000);
+        const expirationTime = (new Date().getTime()) + (response?.data?.expires_in * 10000000);
         setExpiresIn(expirationTime);
       }
     } catch (error) {
@@ -86,4 +86,4 @@ const Login = () => {
   )
 }
 
-export default Login;
+export default React.memo(Login);
