@@ -5,6 +5,7 @@ import FormLogin from '../components/FormLogin';
 import { API_ENDPOINTS } from '../helpers/constant';
 import { axiosConfig } from '../helpers/utils';
 import useLocalStorage from '../hooks/useLocalStorage';
+import moment from 'moment';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,9 +25,13 @@ const Login = () => {
       const request = await axios.post(url, formData);
       if (request?.status === 200) {
         const response = request?.data;
+        const _expiresInTimes1000 = response?.data?.expires_in * 1000;
+        const _expiresInOneDay = moment(
+          new Date().getTime() + _expiresInTimes1000)
+          .format('YYYY-MM-DD HH:mm:ss');
         setToken(response?.data?.access_token);
-        const expirationTime = (new Date().getTime()) + (response?.data?.expires_in * 10000000);
-        setExpiresIn(expirationTime);
+        // const expirationTime = (new Date().getTime()) + (response?.data?.expires_in * 10000000);
+        setExpiresIn(_expiresInOneDay);
       }
     } catch (error) {
       console.error(error);

@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import useLocalStorage from './hooks/useLocalStorage';
 import menus from './menus';
+import moment from 'moment';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   }
 
   useEffect(() => {
-    if (new Date().getTime() > expiresIn) {
+    if (moment().format('YYYY-MM-DD HH:mm:ss') > expiresIn) {
       // Token telah kedaluwarsa
       setToken('');
       setExpiresIn('');
