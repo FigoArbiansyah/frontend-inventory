@@ -38,7 +38,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <>
       <main className='flex'>
         <Sidebar items={authorizedMenus} />
-        <section className='bg-gray-50 h-screen p-4 w-[80%]'>
+        <section className='bg-gray-50 overflow-y-auto h-screen p-4 w-[80%]'>
           <Navbar auth={auth} />
           <div className='overflow-y-auto py-4'>
             {children}

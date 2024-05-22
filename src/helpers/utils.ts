@@ -20,3 +20,14 @@ export const _handleLogout = async () => {
   setAuthUser('');
   setExpiresIn('');
 }
+
+export const _getFormattedPagination = (pagination: any) => {
+  return {
+    total: pagination?.total_items,
+    per_page: pagination?.items_per_page,
+    current_page: pagination?.current_page,
+    last_page: pagination?.total_pages,
+    prev_page_url: pagination?.previous_page,
+    next_page_url: pagination?.next_page,
+  }
+}

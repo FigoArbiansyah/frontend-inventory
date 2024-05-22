@@ -25,7 +25,7 @@ const Login = () => {
       const request = await axios.post(url, formData);
       if (request?.status === 200) {
         const response = request?.data;
-        const _expiresInTimes1000 = response?.data?.expires_in * 1000;
+        const _expiresInTimes1000 = response?.data?.expires_in * 1;
         const _expiresInOneDay = moment(
           new Date().getTime() + _expiresInTimes1000)
           .format('YYYY-MM-DD HH:mm:ss');
